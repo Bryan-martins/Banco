@@ -10,6 +10,7 @@ class Conta:
         self._limite = limite
         self._historico = Historico()
         Conta._total_contas += 1
+        self._contas = []
 
     @staticmethod
     def get_total_contas():
@@ -46,7 +47,30 @@ class Conta:
     @historico.setter
     def historico(self, historico):
         self._historico = historico
+
+    def cadastra(self, pessoa):
+        existe = self.busca(pessoa.titular.cpf)
+        if(existe == None):
+            self._contas.append(pessoa)
+            return True
         
+        else:
+            return False
+
+    '''def login(self):
+        numero = input('Digite o numero da conta: ')
+        cpf = input('Digite o CPF da conta: ')
+        for x in self._contas:
+            if numero == x.numero and cpf == x.titular.cpf:
+    '''
+
+    def busca(self, cpf):
+        for x in self._contas:
+            if x.titular.cpf == cpf:
+                return x
+        
+        return None
+
     def deposita(self, valor):
         if self.saldo <= 10000 and valor <= 10000 - self.saldo :
             self.saldo += valor
@@ -70,10 +94,10 @@ class Conta:
         print('Saldo: {} \nConta: {}'.format(self.saldo, self.numero))
         self.historico.mov.append('Tirado o extrato!, saldo de R$ {}'.format(self.saldo))
     
-    def transfere(self, contas, valor):
+    def transfere(self, cpf):
         opc = int(input('Digite a conta para qual vai transferir: '))
 
-        for x in contas:
+        for x in self._contas:
             if x.numero == opc:     
                 res = self.saca(valor)
                 if res:
@@ -82,13 +106,11 @@ class Conta:
                         self.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(x.numero,valor))
                     
                     else:
-                        print('la')
-                        print('Erro! ')
                         self.deposita(valor)
                 else:
                     return False
-
-    def menu(self, contas):
+    '''
+    def menu(self, numero):
         cont = 1
 
         while cont != 0:
@@ -133,7 +155,7 @@ class Conta:
             else:
                 print('Digite uma opção válida! ')
                 print()
-
+    '''
 
 class Cliente:
     def __init__(self, nome, sn, cpf):

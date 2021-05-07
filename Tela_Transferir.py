@@ -53,6 +53,9 @@ class Tela_transferir(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(540, 390, 80, 30))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(QtCore.QRect(230, 230, 80, 30))
+        self.pushButton_2.setObjectName("pushButton_2")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 640, 21))
@@ -73,13 +76,14 @@ class Tela_transferir(object):
         self.label_3.setText(_translate("MainWindow", "Valor: "))
         self.label_4.setText(_translate("MainWindow", "Seu saldo após a transferência: "))
         self.pushButton.setText(_translate("MainWindow", "Voltar"))
+        self.pushButton_2.setText(_translate("MainWindow", "Confirmar"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Tela_transferir()
+    ui = Tela_Transferir()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

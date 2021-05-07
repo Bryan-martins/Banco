@@ -69,8 +69,10 @@ class Main(QMainWindow, Ui_Main):
         Sobrenome = self.tela_cadastro.lineEdit_5.text()
 
         if not(nome == '' or CPF == '' or Sobrenome == ''):
-            p = Cliente('1', nome, Sobrenome, CPF, 0)
+            p = Cliente('1', nome, Sobrenome, CPF, 100)
             if(self.cad.cadastra(p)):
+                p = Cliente('2', nome, Sobrenome, CPF, 100)
+                self.cad.cadastra(p)
                 QMessageBox.information(None, 'POOII', 'Cadastrado com sucesso! ')
                 self.tela_cadastro.lineEdit.setText('')
                 self.tela_cadastro.lineEdit_5.setText('')
@@ -101,17 +103,24 @@ class Main(QMainWindow, Ui_Main):
 
     def menu(self, pessoa):
         self.QStack.setCurrentIndex(2)
-        self.tela_usuario.pushButton_3.clicked.connect(self.botaoTranferir(pessoa))
-        
+        self.tela_usuario.pushButton_3.clicked.connect(lambda:self.botaoTranferir(pessoa))
 
     def botaoTranferir(self, pessoa):
+        self.QStack.setCurrentIndex(3)
+        self.tela_transferir.pushButton_2.clicked.connect(lambda:self.botaoTranferir2(pessoa))
+        self.tela_transferir.lineEdit_3.setText(str(pessoa.saldo))
+        self.tela_transferir.pushButton.clicked.connect(self.voltar2)
+
+    def botaoTranferir2(self, pessoa):
         numero = self.tela_transferir.lineEdit.text()
         valor = self.tela_transferir.lineEdit_2.text()
         self.cad.transfere(numero, valor, pessoa)
-        self.tela_transferir.pushButton.clicked.connect(self.voltar)
 
     def voltar(self):
         self.QStack.setCurrentIndex(0)
+
+    def voltar2(self):
+        self.QStack.setCurrentIndex(2)
 
     def abrirTelaCadastro(self):
         self.QStack.setCurrentIndex(1)

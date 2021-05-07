@@ -1,10 +1,7 @@
 class Conta:
 
-    _total_contas = 0
-
     def __init__(self):
         self._contas = []
-        Conta._total_contas += 1
 
     def cadastra(self, pessoa):
         existe = self.busca(pessoa.numero, pessoa.cpf)
@@ -16,48 +13,29 @@ class Conta:
             return False
 
     def busca(self, numero, cpf):
-        for x in self._contas:
-            if x.cpf == cpf and x.numero == numero:
+        for x in range(len(self._contas)):
+            if self._contas[x].cpf == cpf and self._contas[x].numero == numero:
                 return x
         
         return None
-
-    def deposita(self, valor):
-        if self.saldo <= 10000 and valor <= 10000 - self.saldo :
-            self.saldo += valor
-            self.historico.mov.append('Deposito de R$ {}'.format(valor))
-            return True
-
-        else:
-            print('Sem limite!')
-            return False
-
-    def saca(self, valor):
-        if valor <= self.saldo:
-            self.saldo -= valor
-            self.historico.mov.append('Saque de R$ {}'.format(valor)) 
-            return True
-        else:
-            return False
     
     def extrato(self):
         print('Saldo: {} \nConta: {}'.format(self.saldo, self.numero))
         self.historico.mov.append('Tirado o extrato!, saldo de R$ {}'.format(self.saldo))
     
-    def transfere(self, numero, valor, pessoa):
-        for x in self._contas:
-            if x.numero == numero:     
-                res = pessoa.saca(valor)
+    def transfere(self, numero, valor, pos):
+        for x in range(len(self._contas)):
+            if self._contas[x].numero == numero:     
+                res = self._contas[pos].saca(valor)
                 if res:
-                    res2 = x.deposita(valor)
+                    res2 = self._contas[x].deposita(valor)
                     if res2:
-                        pessoa.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(x.numero,valor))
+                        self._contas[pos].historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(self._contas[x].numero,float(valor)))
                     
                     else:
-                        pessoa.deposita(valor)
+                        self._contas[x].deposita(valor)
                 else:
                     return False
-
 
 class Cliente:
 
@@ -71,6 +49,26 @@ class Cliente:
         self.saldo = saldo
         self._limite = limite
         self._historico = Historico()
+
+    def saca(self, valor):
+        valor2 = float(valor)
+        if valor2 <= self.saldo:
+            self.saldo -= valor2
+            self.historico.mov.append('Saque de R$ {}'.format(valor2)) 
+            return True
+        else:
+            return False
+
+    def deposita(self, valor):
+        valor2 = float(valor)
+        if self.saldo <= 10000 and valor2 <= 10000 - self.saldo :
+            self.saldo += valor2
+            self.historico.mov.append('Deposito de R$ {}'.format(valor2))
+            return True
+
+        else:
+            print('Sem limite!')
+            return False
 
     @property
     def nome(self):
@@ -95,10 +93,6 @@ class Cliente:
     @cpf.setter
     def cpf(self, cpf):
         self._cpf = cpf
-
-    @staticmethod
-    def get_total_contas():
-        return Conta._total_contas
 
     @property
     def numero(self):

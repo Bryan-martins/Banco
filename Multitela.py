@@ -49,9 +49,11 @@ class Ui_Main(QtWidgets.QWidget):
 
 class Main(QMainWindow, Ui_Main):
 
+    cont = 0
+
     def __init__(self, parent=None):
         super(Main, self).__init__(parent)
-        self.setupUi(self)
+        self.setupUi(self)    
 
         self.cad = Conta()
         self.tela_inicial.pushButton.clicked.connect(self.abrirTelaCadastro)
@@ -69,12 +71,10 @@ class Main(QMainWindow, Ui_Main):
         Sobrenome = self.tela_cadastro.lineEdit_5.text()
 
         if not(nome == '' or CPF == '' or Sobrenome == ''):
-            p = Cliente('1', nome, Sobrenome, CPF, 100)
+            p = Cliente(str(self.cont), nome, Sobrenome, CPF, 100.0)
             if(self.cad.cadastra(p)):
-                p = Cliente('2', nome, Sobrenome, CPF, 100)
-                self.cad.cadastra(p)
                 QMessageBox.information(None, 'POOII', 'Cadastrado com sucesso! ')
-                self.tela_cadastro.lineEdit.setText('')
+                self.tela_cadastro.lineEdit.setText(str(self.cont))
                 self.tela_cadastro.lineEdit_5.setText('')
                 self.tela_cadastro.lineEdit_2.setText('')
             
@@ -94,27 +94,35 @@ class Main(QMainWindow, Ui_Main):
     def BotaoLogar(self):
         numero = self.tela_login.lineEdit.text()
         cpf = self.tela_login.lineEdit_2.text()
-        pessoa = self.cad.busca(numero, cpf)
-        if (pessoa != None):
-            self.menu(pessoa)
-
+        pos = self.cad.busca(numero, cpf)
+        if (pos != None):
+            self.menu(pos)
+            self.tela_login.lineEdit.setText('')
+            self.tela_login.lineEdit_2.setText('')
+            numero = ' '
+            cpf = ' '
+            
         else:
             QMessageBox.information(None, 'POOII', 'Todos os valores devem ser preenchidos! ')
 
-    def menu(self, pessoa):
+    def menu(self, pos):
         self.QStack.setCurrentIndex(2)
-        self.tela_usuario.pushButton_3.clicked.connect(lambda:self.botaoTranferir(pessoa))
+        self.tela_usuario.pushButton_3.clicked.connect(lambda:self.botaoTranferir(pos))
+        self.tela_usuario.pushButton_5.clicked.connect(self.voltar)
 
-    def botaoTranferir(self, pessoa):
+    def botaoTranferir(self, pos):
         self.QStack.setCurrentIndex(3)
-        self.tela_transferir.pushButton_2.clicked.connect(lambda:self.botaoTranferir2(pessoa))
-        self.tela_transferir.lineEdit_3.setText(str(pessoa.saldo))
+        self.tela_transferir.pushButton_2.clicked.connect(lambda:self.botaoTranferir2(pos))
+        self.tela_transferir.lineEdit_3.setText(str(self.cad._contas[pos].saldo))
         self.tela_transferir.pushButton.clicked.connect(self.voltar2)
 
-    def botaoTranferir2(self, pessoa):
+    def botaoTranferir2(self, pos):
         numero = self.tela_transferir.lineEdit.text()
         valor = self.tela_transferir.lineEdit_2.text()
-        self.cad.transfere(numero, valor, pessoa)
+        self.cad.transfere(numero, valor, pos)
+        self.tela_transferir.lineEdit.setText('')
+        self.tela_transferir.lineEdit_2.setText('')
+        self.tela_transferir.lineEdit_3.setText(str(self.cad._contas[pos].saldo))
 
     def voltar(self):
         self.QStack.setCurrentIndex(0)

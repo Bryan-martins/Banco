@@ -10,6 +10,7 @@ from Tela_Menu import Tela_menu
 from Tela_Transferir import Tela_transferir
 from Tela_Usuario import Tela_usuario
 from Tela_Login import Tela_login
+from Tela_Saque import Tela_Saque
 
 class Ui_Main(QtWidgets.QWidget):
 

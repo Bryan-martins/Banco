@@ -107,7 +107,9 @@ class Main(QMainWindow, Ui_Main):
             
         else:
             QMessageBox.information(None, 'POOII', 'Todos os valores devem ser preenchidos! ')
-        
+
+        return None
+
     def menu(self, pessoa):
         self.QStack.setCurrentIndex(2)
         self.tela_usuario.pushButton_3.clicked.connect(lambda:self.botaoTranferir(pessoa))
@@ -117,7 +119,9 @@ class Main(QMainWindow, Ui_Main):
 
     def botaoTranferir(self, pessoa):
         self.QStack.setCurrentIndex(3)
-        self.tela_transferir.lineEdit_3.setText(' ')
+        self.tela_transferir.lineEdit.setText('')
+        self.tela_transferir.lineEdit_2.setText('')
+        self.tela_transferir.lineEdit_3.setText('')
         self.tela_transferir.pushButton.clicked.connect(self.voltar2)
         self.tela_transferir.pushButton_2.clicked.connect(lambda:self.botaoTranferir2(pessoa))
         return None
@@ -126,26 +130,25 @@ class Main(QMainWindow, Ui_Main):
         numero = self.tela_transferir.lineEdit.text()
         valor = self.tela_transferir.lineEdit_2.text()
         pessoa.transfere(numero, valor, self.cad._contas)
-        self.tela_transferir.lineEdit.setText('')
-        self.tela_transferir.lineEdit_2.setText(str(pessoa.saldo))
         self.tela_transferir.lineEdit_3.setText(str(pessoa.saldo))
         return None
 
     def voltar(self):
         self.QStack.setCurrentIndex(0)
+        return None
 
     def voltar2(self):
         self.QStack.setCurrentIndex(2)
+        return None
 
     def abrirTelaCadastro(self):
         self.QStack.setCurrentIndex(1)
+        return None
     
     def abrirTelaLogin(self):
         self.QStack.setCurrentIndex(4)
-    
-    def depositar(self):
-        self.QStack
-    
+        return None
+        
 if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)

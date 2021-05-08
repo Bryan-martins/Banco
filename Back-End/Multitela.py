@@ -143,6 +143,9 @@ class Main(QMainWindow, Ui_Main):
     def abrirTelaLogin(self):
         self.QStack.setCurrentIndex(4)
     
+    def depositar(self):
+        self.QStack
+    
 if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)

@@ -60,10 +60,10 @@ class Main(QMainWindow, Ui_Main):
         self.cad = Conta()
         self.tela_inicial.pushButton.clicked.connect(self.abrirTelaCadastro)
         self.tela_inicial.pushButton_2.clicked.connect(self.abrirTelaLogin)
-
         
         self.tela_login.pushButton.clicked.connect(self.voltar)
         self.tela_login.pushButton_2.clicked.connect(self.BotaoLogar)
+
         self.tela_cadastro.pushButton_2.clicked.connect(self.voltar)
         self.tela_cadastro.pushButton.clicked.connect(self.botaoCadastra)
     
@@ -71,38 +71,31 @@ class Main(QMainWindow, Ui_Main):
         nome = self.tela_cadastro.lineEdit.text()
         CPF = self.tela_cadastro.lineEdit_2.text()
         Sobrenome = self.tela_cadastro.lineEdit_5.text()
+        self.tela_cadastro.lineEdit.setText('')
+        self.tela_cadastro.lineEdit_2.setText('')
+        self.tela_cadastro.lineEdit_5.setText('')
 
         if not(nome == '' or CPF == '' or Sobrenome == ''):
             p = Cliente(str(Cliente.cont), nome, Sobrenome, CPF, 100.0)
+
             if(self.cad.cadastra(p)):
                 QMessageBox.information(None, 'POOII', 'Cadastrado com sucesso! ')
-                self.tela_cadastro.lineEdit.setText(str(Cliente.cont))
-                self.tela_cadastro.lineEdit_5.setText('')
-                self.tela_cadastro.lineEdit_2.setText('')
             
             else:
                 QMessageBox.information(None, 'POOII', 'O CPF informado já está cadastrado! ')
-                self.tela_cadastro.lineEdit.setText('')
-                self.tela_cadastro.lineEdit_5.setText('')
-                self.tela_cadastro.lineEdit_2.setText('')
+            
         else:
             QMessageBox.information(None, 'POOII', 'Todos os valores devem ser preenchidos! ')
-            self.tela_cadastro.lineEdit.setText('')
-            self.tela_cadastro.lineEdit_5.setText('')
-            self.tela_cadastro.lineEdit_2.setText('')
         
         self.QStack.setCurrentIndex(0)
 
     def BotaoLogar(self):
-        numero = ''
-        cpf = ''
-
         numero = self.tela_login.lineEdit.text()
         cpf = self.tela_login.lineEdit_2.text()
+        self.tela_login.lineEdit.setText('')
+        self.tela_login.lineEdit_2.setText('')
         pessoa = self.cad.busca(numero, cpf)
         if (pessoa != None):
-            self.tela_login.lineEdit.setText('')
-            self.tela_login.lineEdit_2.setText('')
             self.menu(pessoa)
             
         else:
@@ -121,7 +114,7 @@ class Main(QMainWindow, Ui_Main):
         self.QStack.setCurrentIndex(3)
         self.tela_transferir.lineEdit.setText('')
         self.tela_transferir.lineEdit_2.setText('')
-        self.tela_transferir.lineEdit_3.setText('')
+        self.tela_transferir.lineEdit_3.setText(str(pessoa.saldo))
         self.tela_transferir.pushButton.clicked.connect(self.voltar2)
         self.tela_transferir.pushButton_2.clicked.connect(lambda:self.botaoTranferir2(pessoa))
         return None

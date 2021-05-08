@@ -13,8 +13,8 @@ class Conta:
             return False
 
     def busca(self, numero, cpf):
-        for x in range(len(self._contas)):
-            if self._contas[x].cpf == cpf and self._contas[x].numero == numero:
+        for x in self._contas:
+            if x.cpf == cpf and x.numero == numero:
                 return x
         
         return None
@@ -22,23 +22,10 @@ class Conta:
     def extrato(self):
         print('Saldo: {} \nConta: {}'.format(self.saldo, self.numero))
         self.historico.mov.append('Tirado o extrato!, saldo de R$ {}'.format(self.saldo))
-    
-    def transfere(self, numero, valor, pos):
-        for x in range(len(self._contas)):
-            if self._contas[x].numero == numero:     
-                res = self._contas[pos].saca(valor)
-                if res:
-                    res2 = self._contas[x].deposita(valor)
-                    if res2:
-                        self._contas[pos].historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(self._contas[x].numero,float(valor)))
-                    
-                    else:
-                        self._contas[x].deposita(valor)
-                else:
-                    return False
 
 class Cliente:
 
+    cont = 1
     __slots__ = ['_nome','_numero', '_sn','_cpf', 'saldo', '_limite', '_historico']
 
     def __init__(self, numero, nome, sn, cpf, saldo, limite = 10000):
@@ -49,6 +36,7 @@ class Cliente:
         self.saldo = saldo
         self._limite = limite
         self._historico = Historico()
+        Cliente.cont += 1 
 
     def saca(self, valor):
         valor2 = float(valor)
@@ -69,6 +57,20 @@ class Cliente:
         else:
             print('Sem limite!')
             return False
+
+    def transfere(self, numero, valor, lista):
+        for x in lista:
+            if x.numero == numero:     
+                res = self.saca(valor)
+                if res:
+                    res2 = x.deposita(valor)
+                    if res2:
+                        self.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(x.numero,float(valor)))
+                    
+                    else:
+                        self.deposita(valor)
+                else:
+                    return False
 
     @property
     def nome(self):

@@ -9,8 +9,8 @@ class Conta:
             self._contas.append(pessoa)
             return True
         
-        else:
-            return False
+        self._contas.append(pessoa)
+        return True  
 
     def busca(self, numero, cpf):
         for x in self._contas:

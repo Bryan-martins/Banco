@@ -5,7 +5,7 @@ class Conta:
 
     def cadastra(self, pessoa):
         existe = self.busca(pessoa.numero, pessoa.cpf)
-        if(existe == None):
+        if(existe != None):
             self._contas.append(pessoa)
             return True
         

@@ -114,14 +114,21 @@ class Main(QMainWindow, Ui_Main):
         self.QStack.setCurrentIndex(2)
         self.tela_usuario.pushButton_3.clicked.connect(lambda:self.botaoTranferir(pessoa))
         self.tela_usuario.pushButton_5.clicked.connect(self.voltar)
+        self.tela_usuario.pushButton.clicked.connect(self.botaoSacar)
         return None
         
+    def botaoSacar(self, valor):
+        valor = self.Tela_Saque.lineEdit.setText('')
+        saldoAntigo = self.Tela_Saque.lineEdit_2.setText(str(pessoa.saldo))
+        novoSaldo = self.Tela_Saque.lineEdit_3.setText(str(pessoa.saldo - valor))
+
+
 
     def botaoTranferir(self, pessoa):
         self.QStack.setCurrentIndex(3)
         self.tela_transferir.lineEdit.setText('')
         self.tela_transferir.lineEdit_2.setText('')
-        self.tela_transferir.lineEdit_3.setText('')
+        self.tela_transferir.lineEdit_3.setText(str(pessoa.saldo))
         self.tela_transferir.pushButton.clicked.connect(self.voltar2)
         self.tela_transferir.pushButton_2.clicked.connect(lambda:self.botaoTranferir2(pessoa))
         return None

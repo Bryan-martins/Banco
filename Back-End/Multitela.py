@@ -113,8 +113,8 @@ class Main(QMainWindow, Ui_Main):
     def botaoSacar(self, valor):
         valor = self.Tela_Saque.lineEdit.setText('')
         saldoAntigo = self.Tela_Saque.lineEdit_2.setText(str(pessoa.saldo))
-        novoSaldo = self.Tela_Saque.lineEdit_3.setText(str(pessoa.saldo - valor))
-
+        pessoa.saca(valor)
+        novoSaldo = self.Tela_Saque.lineEdit_3.setText(str(pessoa.saldo))
 
 
     def botaoTranferir(self, pessoa):

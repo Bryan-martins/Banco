@@ -40,7 +40,7 @@ class Cliente:
 
     def saca(self, valor):
         valor2 = float(valor)
-        if valor<= self.saldo:
+        if valor2 <= self.saldo:
             self.saldo -= valor2
             self.historico.mov.append('Saque de R$ {}'.format(valor2)) 
             return True

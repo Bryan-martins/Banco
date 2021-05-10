@@ -75,7 +75,10 @@ class Main(QMainWindow, Ui_Main):
 
         self.tela_cadastro.pushButton_2.clicked.connect(self.voltar)
         self.tela_cadastro.pushButton.clicked.connect(self.botaoCadastra)
-    
+
+        p = Cliente(str(Cliente.cont), '1', '1', '1', 100.0)
+        self.cad.cadastra(p)
+
     def botaoCadastra(self):
         nome = self.tela_cadastro.lineEdit.text()
         CPF = self.tela_cadastro.lineEdit_2.text()
@@ -123,17 +126,21 @@ class Main(QMainWindow, Ui_Main):
         
     def botaoHistorico(self):
         pass
-
+    
     def botaoSacar(self, pessoa):
         self.QStack.setCurrentIndex(6)
+        self.Tela_Saque.lineEdit.setText('')
+        self.Tela_Saque.lineEdit_2.setText(str(pessoa.saldo))
+        self.Tela_Saque.pushButton_2.clicked.connect(lambda:self.botaoSacar2(pessoa))
+
+    def botaoSacar2(self, pessoa):
         valor = self.Tela_Saque.lineEdit.text()
-        saldoAntigo = self.Tela_Saque.lineEdit_2.Text(pessoa.saldo)
-        novoSaldo = valor - saldoAntigo
-        self.Tela_Saque.lineEdit_3.setText(novoSaldo)
+        pessoa.saca(valor)
+        self.Tela_Saque.lineEdit_3.setText(str(pessoa.saldo))
         self.Tela_Saque.pushButton.clicked.connect(self.voltar2)
 
     def botaoDepositar(self, pessoa):
-        self.QStack.setCurrentIndex(6)
+        self.QStack.setCurrentIndex(5)
         valorDeposidado = self.Tela_Deposito.lineEdit.text()
         self.Tela_Deposito.lineEdit_3.setText(pessoa)
         self.Tela_Deposito.pushButton.clicked.connect(self.voltar2)

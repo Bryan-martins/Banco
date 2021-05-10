@@ -179,6 +179,7 @@ class Main(QMainWindow, Ui_Main):
         self.QStack.setCurrentIndex(6)
         return None
         
+        
 if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)

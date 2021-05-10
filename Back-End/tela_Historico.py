@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Tela_Menu.ui'
+# Form implementation generated from reading ui file 'Historico.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,28 +14,32 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(640, 480)
+        MainWindow.resize(910, 634)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(220, 100, 171, 31))
+        self.label.setGeometry(QtCore.QRect(48, 30, 71, 41))
         font = QtGui.QFont()
-        font.setPointSize(20)
+        font.setPointSize(10)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(120, 220, 80, 30))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton.setFont(font)
-        self.pushButton.setObjectName("pushButton")
+        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
+        self.lineEdit.setGeometry(QtCore.QRect(98, 30, 651, 31))
+        self.lineEdit.setObjectName("lineEdit")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_2.setGeometry(QtCore.QRect(400, 220, 80, 30))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.pushButton_2.setFont(font)
+        self.pushButton_2.setGeometry(QtCore.QRect(48, 490, 93, 28))
         self.pushButton_2.setObjectName("pushButton_2")
+        self.tableView = QtWidgets.QTableView(self.centralwidget)
+        self.tableView.setGeometry(QtCore.QRect(48, 110, 821, 341))
+        self.tableView.setObjectName("tableView")
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(780, 30, 91, 31))
+        self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 910, 26))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
@@ -46,9 +50,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "Bem-vindo(a)"))
-        self.pushButton.setText(_translate("MainWindow", "Cadastrar"))
-        self.pushButton_2.setText(_translate("MainWindow", "Logar"))
+        self.label.setText(_translate("MainWindow", "CPF:"))
+        self.pushButton_2.setText(_translate("MainWindow", "Voltar"))
+        self.pushButton.setText(_translate("MainWindow", "Pesquisar"))
 
 
 if __name__ == "__main__":

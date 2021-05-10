@@ -36,7 +36,7 @@ class Ui_MainWindow(object):
         self.lineEdit_2.setGeometry(QtCore.QRect(290, 250, 191, 20))
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(250, 70, 91, 41))
+        self.label_3.setGeometry(QtCore.QRect(250, 70, 91, 31))
         font = QtGui.QFont()
         font.setPointSize(20)
         self.label_3.setFont(font)

@@ -4,9 +4,10 @@ class Conta:
         self._contas = []
 
     def cadastra(self, pessoa):
-        for x in self._contas:
-            if pessoa.cpf == x.cpf:
-                return False
+        existe = self.busca(pessoa.numero, pessoa.cpf)
+        if(existe != None):
+            self._contas.append(pessoa)
+            return True
         
         self._contas.append(pessoa)
         return True  

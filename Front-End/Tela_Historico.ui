@@ -55,16 +55,6 @@
      <string>Voltar</string>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView">
-    <property name="geometry">
-     <rect>
-      <x>48</x>
-      <y>110</y>
-      <width>821</width>
-      <height>341</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
@@ -76,6 +66,16 @@
     </property>
     <property name="text">
      <string>Pesquisar</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="textEdit">
+    <property name="geometry">
+     <rect>
+      <x>60</x>
+      <y>80</y>
+      <width>811</width>
+      <height>391</height>
+     </rect>
     </property>
    </widget>
   </widget>

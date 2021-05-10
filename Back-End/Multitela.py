@@ -127,7 +127,7 @@ class Main(QMainWindow, Ui_Main):
     def botaoSacar(self, pessoa):
         self.QStack.setCurrentIndex(5)
         valor = self.Tela_Saque.lineEdit.text()
-        saldoAntigo = self.Tela_Saque.lineEdit_2.setText(pessoa.saldo)
+        saldoAntigo = self.Tela_Saque.lineEdit_2.Text(pessoa.saldo)
         novoSaldo = valor - saldoAntigo
         self.Tela_Saque.lineEdit_3.setText(novoSaldo)
         self.Tela_Saque.pushButton.clicked.connect(self.voltar2)
@@ -179,7 +179,7 @@ class Main(QMainWindow, Ui_Main):
         self.QStack.setCurrentIndex(6)
         return None
         
-        
+
 if __name__ == '__main__':
     import sys
     app = QApplication(sys.argv)

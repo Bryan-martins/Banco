@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Val\Documents\Sistema de Informação 2018.1\4ª Período\POO II\Lista 06 - Interface III\BANCOPOO\Front-End\Tela_Saque.ui'
+# Form implementation generated from reading ui file 'Tela_Saque.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -77,3 +77,13 @@ class Ui_MainWindow(object):
         self.label_4.setText(_translate("MainWindow", "Saldo atual:"))
         self.pushButton.setText(_translate("MainWindow", "Voltar"))
         self.pushButton_2.setText(_translate("MainWindow", "OK"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

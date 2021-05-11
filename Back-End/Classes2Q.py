@@ -126,3 +126,9 @@ class Historico:
     def __init__(self):
         self.abertura = datetime.datetime.today()
         self.mov = []
+    
+    def imprime(self):
+        texto = ''
+        for x in self.mov:
+            texto += x + '\n'
+        return texto

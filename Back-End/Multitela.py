@@ -4,7 +4,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtCore import QCoreApplication
 
-from Classes2Q import *
 from Tela_cadastro import Tela_cadastro
 from Tela_Menu import Tela_menu
 from Tela_Transferir import Tela_transferir
@@ -66,21 +65,24 @@ class Ui_Main(QtWidgets.QWidget):
 
 class Main(QMainWindow, Ui_Main):
 
-
-	def __init__(self, parent=None):
+	def __init__(self, socket, parent=None):
 		super(Main, self).__init__(parent)
 		self.setupUi(self)
+		self.socket = socket
 
-		self.cad = Conta()
 		self.tela_inicial.pushButton.clicked.connect(self.abrirTelaCadastro)
 		self.tela_inicial.pushButton_2.clicked.connect(self.abrirTelaLogin)
+		
+		self.tela_cadastro.pushButton_2.clicked.connect(self.voltar)
+		self.tela_cadastro.pushButton.clicked.connect(self.botaoCadastra)
+
 		
 		self.tela_login.pushButton.clicked.connect(self.voltar)
 		self.tela_login.pushButton_2.clicked.connect(self.BotaoLogar)
 
-		self.tela_cadastro.pushButton_2.clicked.connect(self.voltar)
-		self.tela_cadastro.pushButton.clicked.connect(self.botaoCadastra)
+		'''self.tela_login.pushButton_3.clicked.connect(self.voltar3)'''
 
+		'''
 		self.Tela_Saque.pushButton_2.clicked.connect(self.botaoSacar2)
 		self.Tela_Saque.pushButton.clicked.connect(self.voltar2)
 
@@ -92,22 +94,39 @@ class Main(QMainWindow, Ui_Main):
 		self.Tela_Deposito.pushButton.clicked.connect(self.voltar2)
 		self.Tela_Deposito.pushButton_2.clicked.connect(self.botaoDepositar2)
 
-		p = Cliente(str(Cliente.cont), '1', '1', '1', 100.0)
-		self.cad.cadastra(p)
-		self.pessoa = None
+		self.pessoa = None'''
+
+	def voltar(self):
+		self.QStack.setCurrentIndex(0)
+
+	def voltar2(self):
+		self.QStack.setCurrentIndex(2)
+	
+	def voltar3(self):
+		exit()
+
+	def abrirTelaCadastro(self):
+		self.QStack.setCurrentIndex(1)
+	
+	def abrirTelaLogin(self):
+		self.QStack.setCurrentIndex(4)
 
 	def botaoCadastra(self):
 		nome = self.tela_cadastro.lineEdit.text()
-		CPF = self.tela_cadastro.lineEdit_2.text()
-		Sobrenome = self.tela_cadastro.lineEdit_5.text()
+		cpf = self.tela_cadastro.lineEdit_2.text()
+		sobrenome = self.tela_cadastro.lineEdit_5.text()
 		self.tela_cadastro.lineEdit.setText('')
 		self.tela_cadastro.lineEdit_2.setText('')
 		self.tela_cadastro.lineEdit_5.setText('')
 
-		if not(nome == '' or CPF == '' or Sobrenome == ''):
-			p = Cliente(str(Cliente.cont), nome, Sobrenome, CPF, 100.0)
+		if not(nome == '' or cpf == '' or sobrenome == ''):
+			#p = Cliente(str(Cliente.cont), nome, Sobrenome, CPF, 100.0)
+			p = "{}!{}!{}!{}".format('1', nome, sobrenome, cpf)
+			#self.cad.cadastra(p)
+			self.socket.send(p.encode())
+			conf = self.socket.recv(1024).decode()
 
-			if(self.cad.cadastra(p)):
+			if(conf):
 				QMessageBox.information(None, 'POOII', 'Cadastrado com sucesso! ')
 			
 			else:
@@ -118,30 +137,32 @@ class Main(QMainWindow, Ui_Main):
 		
 		self.QStack.setCurrentIndex(0)
 
+
 	def BotaoLogar(self):
 		numero = self.tela_login.lineEdit.text()
 		cpf = self.tela_login.lineEdit_2.text()
-		self.tela_login.lineEdit.setText('')
-		self.tela_login.lineEdit_2.setText('')
-		self.pessoa = self.cad.busca(numero, cpf)
-		if (self.pessoa != None):
+
+		p = "{}!{}!{}".format(2, numero, cpf)
+		self.socket.send(p.encode())
+		conf = self.socket.recv(1024).decode()
+		
+		if (conf == "True"):
 			self.menu()
 			
 		else:
-			QMessageBox.information(None, 'POOII', 'Todos os valores devem ser preenchidos! ')
+			QMessageBox.information(None, 'POOII', 'Erro!! ')
 
-		return None
 
 	def menu(self):
 		self.QStack.setCurrentIndex(2)
-		self.tela_usuario.pushButton_3.clicked.connect(self.botaoTranferir)
 		self.tela_usuario.pushButton_5.clicked.connect(self.voltar)
+		'''
+		self.tela_usuario.pushButton_3.clicked.connect(self.botaoTranferir)
 		self.tela_usuario.pushButton.clicked.connect(self.botaoSacar)
 		self.tela_usuario.pushButton_2.clicked.connect(self.botaoDepositar)
 		self.tela_usuario.pushButton_4.clicked.connect(self.botaoHistorico)
-		
-		return None
-		
+	'''	
+	'''	
 	def botaoHistorico(self):
 		texto = self.pessoa.historico.imprime()
 		self.Tela_Historico.textEdit.setText(texto)
@@ -180,27 +201,6 @@ class Main(QMainWindow, Ui_Main):
 		numero = self.tela_transferir.lineEdit.text()
 		valor = self.tela_transferir.lineEdit_2.text()
 		self.pessoa.transfere(numero, valor, self.cad._contas)
-		self.tela_transferir.lineEdit_3.setText(str(self.pessoa.saldo))
+		self.tela_transferir.lineEdit_3.setText(str(self.pessoa.saldo)) '''
 
-	def voltar(self):
-		self.QStack.setCurrentIndex(0)
-		return None
 
-	def voltar2(self):
-		self.QStack.setCurrentIndex(2)
-		return None
-
-	def abrirTelaCadastro(self):
-		self.QStack.setCurrentIndex(1)
-		return None
-	
-	def abrirTelaLogin(self):
-		self.QStack.setCurrentIndex(4)
-		return None
-		
-
-if __name__ == '__main__':
-	import sys
-	app = QApplication(sys.argv)
-	show_main = Main()
-	sys.exit(app.exec_())

@@ -3,18 +3,25 @@ class Conta:
     def __init__(self):
         self._contas = []
 
+    def print(self):
+        for x in self._contas:
+            print(x.cpf)
+            print(x.numero)
+            print(' ')
+
     def cadastra(self, pessoa):
         existe = self.busca(pessoa.numero, pessoa.cpf)
-        if(existe != None):
+        if(existe == None):
+            print(pessoa.cpf)
             self._contas.append(pessoa)
             return True
         
-        self._contas.append(pessoa)
-        return True  
+        return False  
 
     def busca(self, numero, cpf):
         for x in self._contas:
             if x.cpf == cpf and x.numero == numero:
+                print(x.cpf, x.numero)
                 return x
         
         return None
@@ -28,7 +35,7 @@ class Cliente:
     cont = 1
     __slots__ = ['_nome','_numero', '_sn','_cpf', 'saldo', '_limite', '_historico']
 
-    def __init__(self, numero, nome, sn, cpf, saldo, limite = 10000):
+    def __init__(self, numero, nome, sn, cpf, saldo = 100, limite = 10000):
         self._numero = numero
         self._nome = nome
         self._sn = sn

@@ -6,7 +6,7 @@ from PyQt5.QtCore import QCoreApplication
 
 from Classes2Q import *
 from Tela_cadastro import Tela_cadastro
-from Tela_Menu import Tela_menu
+from Tela_Menu import Tela_Menu
 from Tela_Transferir import Tela_transferir
 from Tela_Usuario import Tela_usuario
 from Tela_Login import Tela_login
@@ -31,7 +31,7 @@ class Ui_Main(QtWidgets.QWidget):
 		self.stack6 = QtWidgets.QMainWindow()
 		self.stack7 = QtWidgets.QMainWindow()
 
-		self.tela_inicial = Tela_menu()
+		self.tela_inicial = Tela_Menu()
 		self.tela_inicial.setupUi(self.stack0)
 
 		self.tela_cadastro = Tela_cadastro()

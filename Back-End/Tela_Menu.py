@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Tela_menu(object):
+class Tela_Menu(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
@@ -35,6 +35,12 @@ class Tela_menu(object):
         font.setPointSize(10)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_3.setGeometry(QtCore.QRect(260, 290, 80, 30))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setObjectName("pushButton_3")
         MainWindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
@@ -49,13 +55,14 @@ class Tela_menu(object):
         self.label.setText(_translate("MainWindow", "Bem-vindo(a)"))
         self.pushButton.setText(_translate("MainWindow", "Cadastrar"))
         self.pushButton_2.setText(_translate("MainWindow", "Logar"))
+        self.pushButton_3.setText(_translate("MainWindow", "Sair"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
-    ui = Tela_menu()
+    ui = Tela_Menu()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())

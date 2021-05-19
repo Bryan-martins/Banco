@@ -15,22 +15,16 @@ con, cliente = serv_socket.accept()
 print('Conectando..')
 print('Aguardando mensagem..')
 
-'''
-enviar = ''
-while(enviar != 'sair'):
-    recebe = con.recv(1024)
-    print('Mensagem recebida: '+ recebe.decode())
-    enviar = input('Digite uma mensagem para o cliente: ')
-    con.send(enviar.encode())
-'''
+cont = 1
 
-while(True):
+while(cont != 0):
+
     info = con.recv(1024).decode()
     lista = info.split("!")
 
     if (lista[0] == "1"):
         pessoa = Cliente(str((Cliente.cont)), lista[1], lista[2], lista[3])
-        if(cad.cadastra(pessoa) == True):
+        if(cad.cadastra(pessoa)):
             p = "True"
             con.send(p.encode())
         else:
@@ -44,7 +38,7 @@ while(True):
             con.send(p.encode())
         
         else:
-            p = "False"
+            p = "{}!{}!{}!{}".format("False", 0, 0, 0)
             con.send(p.encode())
 
     elif (lista[0] == "3"):
@@ -66,9 +60,7 @@ while(True):
             print('Erro!')
 
     elif (lista[0] == "5"):
-        print(lista)
         existe = cad.busca(lista[2], lista[1])
-        print(existe)
         texto = existe.historico.imprime()
         con.send(texto.encode())
 
@@ -81,4 +73,9 @@ while(True):
         else:
             print('Erro!')
 
+    elif (lista[0] == "0"):
+        cont = int(lista[1])
+        print('Encerrando server ')
+
 serv_socket.close()
+exit()

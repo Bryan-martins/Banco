@@ -13,8 +13,6 @@ if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	show_main = Main(cliente_socket)
 	app.exec_()
-	print('a')
 	cliente_socket.close()
 	sys.exit()
     
-

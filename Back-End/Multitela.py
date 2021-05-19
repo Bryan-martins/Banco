@@ -5,13 +5,13 @@ from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtCore import QCoreApplication
 
 from Tela_cadastro import Tela_cadastro
-from Tela_Menu import Tela_menu
 from Tela_Transferir import Tela_transferir
 from Tela_Usuario import Tela_usuario
 from Tela_Login import Tela_login
 from Tela_Saque import Tela_Saque
-from tela_Historico import tela_Historico
 from Tela_Deposito import Tela_Deposito
+from Tela_Extrato import Tela_Extrato
+from Tela_Menu import Tela_Menu
 
 class Ui_Main(QtWidgets.QWidget):
 
@@ -30,7 +30,7 @@ class Ui_Main(QtWidgets.QWidget):
 		self.stack6 = QtWidgets.QMainWindow()
 		self.stack7 = QtWidgets.QMainWindow()
 
-		self.tela_inicial = Tela_menu()
+		self.tela_inicial = Tela_Menu()
 		self.tela_inicial.setupUi(self.stack0)
 
 		self.tela_cadastro = Tela_cadastro()
@@ -51,8 +51,8 @@ class Ui_Main(QtWidgets.QWidget):
 		self.Tela_Saque = Tela_Saque()
 		self.Tela_Saque.setupUi(self.stack6) 
 
-		self.Tela_Historico = tela_Historico()
-		self.Tela_Historico.setupUi(self.stack7)   
+		self.Tela_Extrato = Tela_Extrato()
+		self.Tela_Extrato.setupUi(self.stack7)   
 
 		self.QStack.addWidget(self.stack0)
 		self.QStack.addWidget(self.stack1)
@@ -80,7 +80,7 @@ class Main(QMainWindow, Ui_Main):
 		self.tela_login.pushButton.clicked.connect(self.voltar)
 		self.tela_login.pushButton_2.clicked.connect(self.BotaoLogar)
 
-		'''self.tela_login.pushButton_3.clicked.connect(self.voltar3)'''
+		self.tela_inicial.pushButton_3.clicked.connect(self.voltar3)
 
 		
 		self.Tela_Saque.pushButton_2.clicked.connect(self.botaoSacar2)
@@ -89,7 +89,7 @@ class Main(QMainWindow, Ui_Main):
 		self.tela_transferir.pushButton.clicked.connect(self.voltar2)
 		self.tela_transferir.pushButton_2.clicked.connect(self.botaoTranferir2)
 		
-		self.Tela_Historico.pushButton_2.clicked.connect(self.voltar2)
+		self.Tela_Extrato.pushButton_2.clicked.connect(self.voltar2)
 		
 		self.Tela_Deposito.pushButton.clicked.connect(self.voltar2)
 		self.Tela_Deposito.pushButton_2.clicked.connect(self.botaoDepositar2)
@@ -103,6 +103,8 @@ class Main(QMainWindow, Ui_Main):
 		self.QStack.setCurrentIndex(2)
 	
 	def voltar3(self):
+		p = "{}!{}".format(0, "0")
+		self.socket.send(p.encode())
 		exit()
 
 	def abrirTelaCadastro(self):
@@ -213,43 +215,5 @@ class Main(QMainWindow, Ui_Main):
 		p = "{}!{}!{}".format(5, self.pessoa[0], self.pessoa[2])
 		self.socket.send(p.encode())
 		texto = self.socket.recv(1024).decode()
-		self.Tela_Historico.textEdit.setText(texto)
+		self.Tela_Extrato.textEdit.setText(texto)
 		self.QStack.setCurrentIndex(7)
-
-	'''
-	def botaoSacar(self):
-		self.QStack.setCurrentIndex(6)
-		self.Tela_Saque.lineEdit.setText('')
-		self.Tela_Saque.lineEdit_2.setText(str(self.pessoa.saldo))
-
-	def botaoSacar2(self):
-		valor = self.Tela_Saque.lineEdit.text()
-		self.pessoa.saca(valor)
-		self.Tela_Saque.lineEdit_3.setText(str(self.pessoa.saldo))
-
-	def botaoDepositar(self):
-		self.Tela_Deposito.lineEdit.setText('')
-		self.Tela_Deposito.lineEdit_3.setText('')
-		self.Tela_Deposito.lineEdit_2.setText(str(self.pessoa.saldo))
-		self.QStack.setCurrentIndex(5)
-		valorDepositado = self.Tela_Deposito.lineEdit.text()
-
-	def botaoDepositar2(self):
-		deposito = float(self.Tela_Deposito.lineEdit.text())
-		valorantigo = self.Tela_Deposito.lineEdit_2.text()
-		self.pessoa.deposita(float(deposito))
-		self.Tela_Deposito.lineEdit_3.setText(str(self.pessoa.saldo))
-
-	def botaoTranferir(self):
-		self.QStack.setCurrentIndex(3)
-		self.tela_transferir.lineEdit.setText('')
-		self.tela_transferir.lineEdit_2.setText('')
-		self.tela_transferir.lineEdit_3.setText(str(self.pessoa.saldo)) 
-
-	def botaoTranferir2(self):
-		numero = self.tela_transferir.lineEdit.text()
-		valor = self.tela_transferir.lineEdit_2.text()
-		self.pessoa.transfere(numero, valor, self.cad._contas)
-		self.tela_transferir.lineEdit_3.setText(str(self.pessoa.saldo)) '''
-
-

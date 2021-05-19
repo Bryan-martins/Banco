@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Val\Documents\Sistema de Informação 2018.1\4ª Período\POO II\Lista 06 - Interface III\BANCOPOO\Front-End\Tela_Login.ui'
+# Form implementation generated from reading ui file 'Tela_Login.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -11,7 +11,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
+class Tela_login(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(640, 480)
@@ -63,3 +63,13 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Login:"))
         self.pushButton.setText(_translate("MainWindow", "Voltar"))
         self.pushButton_2.setText(_translate("MainWindow", "Entrar"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Tela_login()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

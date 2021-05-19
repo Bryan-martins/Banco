@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'c:\Users\Val\Documents\Sistema de Informação 2018.1\4ª Período\POO II\Lista 06 - Interface III\BANCOPOO\Front-End 2\TelaChat.ui'
+# Form implementation generated from reading ui file 'c:\Users\Val\Documents\Sistema de Informação 2018.1\4ª Período\POO II\Lista 06 - Interface III\BANCOPOO\TelaChat.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #

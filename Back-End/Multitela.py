@@ -82,19 +82,19 @@ class Main(QMainWindow, Ui_Main):
 
 		'''self.tela_login.pushButton_3.clicked.connect(self.voltar3)'''
 
-		'''
+		
 		self.Tela_Saque.pushButton_2.clicked.connect(self.botaoSacar2)
 		self.Tela_Saque.pushButton.clicked.connect(self.voltar2)
-
+		
 		self.tela_transferir.pushButton.clicked.connect(self.voltar2)
 		self.tela_transferir.pushButton_2.clicked.connect(self.botaoTranferir2)
-
+		
 		self.Tela_Historico.pushButton_2.clicked.connect(self.voltar2)
-
+		
 		self.Tela_Deposito.pushButton.clicked.connect(self.voltar2)
 		self.Tela_Deposito.pushButton_2.clicked.connect(self.botaoDepositar2)
 
-		self.pessoa = None'''
+		self.pessoa = None
 
 	def voltar(self):
 		self.QStack.setCurrentIndex(0)
@@ -121,12 +121,12 @@ class Main(QMainWindow, Ui_Main):
 
 		if not(nome == '' or cpf == '' or sobrenome == ''):
 			#p = Cliente(str(Cliente.cont), nome, Sobrenome, CPF, 100.0)
-			p = "{}!{}!{}!{}".format('1', nome, sobrenome, cpf)
+			p = "{}!{}!{}!{}".format(1, nome, sobrenome, cpf)
 			#self.cad.cadastra(p)
 			self.socket.send(p.encode())
 			conf = self.socket.recv(1024).decode()
 
-			if(conf):
+			if(conf == "True"):
 				QMessageBox.information(None, 'POOII', 'Cadastrado com sucesso! ')
 			
 			else:
@@ -145,8 +145,10 @@ class Main(QMainWindow, Ui_Main):
 		p = "{}!{}!{}".format(2, numero, cpf)
 		self.socket.send(p.encode())
 		conf = self.socket.recv(1024).decode()
-		
-		if (conf == "True"):
+		lista = conf.split("!")
+		self.pessoa = [lista[1], lista[2], lista[3]]
+
+		if (lista[0] == "True"):
 			self.menu()
 			
 		else:
@@ -156,18 +158,65 @@ class Main(QMainWindow, Ui_Main):
 	def menu(self):
 		self.QStack.setCurrentIndex(2)
 		self.tela_usuario.pushButton_5.clicked.connect(self.voltar)
-		'''
-		self.tela_usuario.pushButton_3.clicked.connect(self.botaoTranferir)
 		self.tela_usuario.pushButton.clicked.connect(self.botaoSacar)
 		self.tela_usuario.pushButton_2.clicked.connect(self.botaoDepositar)
+		self.tela_usuario.pushButton_3.clicked.connect(self.botaoTranferir)
 		self.tela_usuario.pushButton_4.clicked.connect(self.botaoHistorico)
-	'''	
-	'''	
+	
+	def botaoSacar(self):
+		self.QStack.setCurrentIndex(6)
+		self.Tela_Saque.lineEdit.setText('')
+		self.Tela_Saque.lineEdit_2.setText(self.pessoa[1])
+		self.Tela_Saque.lineEdit_3.setText('')
+	
+	def botaoSacar2(self):
+		valor = self.Tela_Saque.lineEdit.text()
+		p = "{}!{}!{}!{}".format(3, valor, self.pessoa[0], self.pessoa[2])
+		self.socket.send(p.encode())
+		saldo = self.socket.recv(1024).decode()
+		self.pessoa[1] = saldo
+		self.Tela_Saque.lineEdit_3.setText(self.pessoa[1])
+
+	def botaoDepositar(self):
+		self.Tela_Deposito.lineEdit.setText('')
+		self.Tela_Deposito.lineEdit_3.setText('')
+		self.Tela_Deposito.lineEdit_2.setText(self.pessoa[1])
+		self.QStack.setCurrentIndex(5)
+		#valorDepositado = self.Tela_Deposito.lineEdit.text()
+
+	def botaoDepositar2(self):
+		deposito = float(self.Tela_Deposito.lineEdit.text())
+		#valorantigo = self.Tela_Deposito.lineEdit_2.text()
+		#self.pessoa.deposita(float(deposito))
+		p = "{}!{}!{}!{}".format(4, deposito, self.pessoa[0], self.pessoa[2])
+		self.socket.send(p.encode())
+		saldo = self.socket.recv(1024).decode()
+		self.pessoa[1] = saldo
+		self.Tela_Deposito.lineEdit_3.setText(self.pessoa[1])
+
+	def botaoTranferir(self):
+		self.QStack.setCurrentIndex(3)
+		self.tela_transferir.lineEdit_3.setText(self.pessoa[1]) 
+
+	def botaoTranferir2(self):
+		numero = self.tela_transferir.lineEdit.text()
+		valor = self.tela_transferir.lineEdit_2.text()
+		p = "{}!{}!{}!{}!{}".format(6, self.pessoa[0], self.pessoa[2], numero, valor)
+		self.socket.send(p.encode())
+		saldo = self.socket.recv(1024).decode()
+		self.pessoa[1] = saldo
+		self.tela_transferir.lineEdit_3.setText(self.pessoa[1])
+
 	def botaoHistorico(self):
-		texto = self.pessoa.historico.imprime()
+		#texto = self.pessoa.historico.imprime()
+		#self.Tela_Historico.textEdit.setText(texto)
+		p = "{}!{}!{}".format(5, self.pessoa[0], self.pessoa[2])
+		self.socket.send(p.encode())
+		texto = self.socket.recv(1024).decode()
 		self.Tela_Historico.textEdit.setText(texto)
 		self.QStack.setCurrentIndex(7)
-	
+
+	'''
 	def botaoSacar(self):
 		self.QStack.setCurrentIndex(6)
 		self.Tela_Saque.lineEdit.setText('')

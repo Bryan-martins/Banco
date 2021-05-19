@@ -12,16 +12,14 @@ class Conta:
     def cadastra(self, pessoa):
         existe = self.busca(pessoa.numero, pessoa.cpf)
         if(existe == None):
-            print(pessoa.cpf)
             self._contas.append(pessoa)
             return True
         
-        return False  
+        return False
 
     def busca(self, numero, cpf):
         for x in self._contas:
             if x.cpf == cpf and x.numero == numero:
-                print(x.cpf, x.numero)
                 return x
         
         return None
@@ -67,13 +65,14 @@ class Cliente:
 
     def transfere(self, numero, valor, lista):
         for x in lista:
-            if x.numero == numero:     
+            if x.numero == numero and x.numero != self.numero:     
                 res = self.saca(valor)
                 if res:
                     res2 = x.deposita(valor)
                     if res2:
                         self.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(x.numero,float(valor)))
-                    
+                        return True
+
                     else:
                         self.deposita(valor)
                 else:
@@ -135,7 +134,8 @@ class Historico:
         self.mov = []
     
     def imprime(self):
-        texto = ''
+        texto = str(self.abertura) + '\n'
         for x in self.mov:
             texto += x + '\n'
+        print(texto)
         return texto

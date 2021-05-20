@@ -131,3 +131,5 @@ dmypy.json
 .DS*
 
 .vscode*
+
+.qt_for_python/*

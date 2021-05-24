@@ -63,6 +63,10 @@ class Ui_Main(QtWidgets.QWidget):
 		self.QStack.addWidget(self.stack5)
 		self.QStack.addWidget(self.stack6)
 		self.QStack.addWidget(self.stack7)
+		'''
+        DESCRIPTION
+            Definição das Telas"
+        '''
 
 class Main(QMainWindow, Ui_Main):
 
@@ -117,6 +121,7 @@ class Main(QMainWindow, Ui_Main):
 			QMessageBox.information(None, 'POOII', 'Todos os valores devem ser preenchidos! ')
 		
 		self.QStack.setCurrentIndex(0)
+		
 
 	def BotaoLogar(self):
 		numero = self.tela_login.lineEdit.text()

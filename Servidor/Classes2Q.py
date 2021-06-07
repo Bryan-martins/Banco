@@ -2,6 +2,10 @@ class Conta:
 
     def __init__(self):
         self._contas = []
+        '''
+        DESCRIPTION
+            Definição da Classe Conta    
+        '''
 
     def print(self):
         for x in self._contas:
@@ -16,6 +20,10 @@ class Conta:
             return True
         
         return False
+        '''
+        DESCRIPTION
+            Verifica se a pessoa está cadastrada, caso ao contrario ela será cadastrada no sistema.
+        '''
 
     def busca(self, numero, cpf):
         for x in self._contas:
@@ -23,11 +31,26 @@ class Conta:
                 return x
         
         return None
+        '''
+            DESCRIPTION
+                Verifica se existe alguem cadastrado com o cpf e o numero da conta pesquisado.
+            :param numero:
+                Variavel do tipo int;
+            :param cpf: 
+                Variavel do tipo int;
+            :return:
+                Caso exista alguem cadastrado ele retorna a pessoa que possui os dados pesquisados
+                senão ele retorna None;
+        '''
     
     def extrato(self):
         print('Saldo: {} \nConta: {}'.format(self.saldo, self.numero))
         self.historico.mov.append('Tirado o extrato!, saldo de R$ {}'.format(self.saldo))
 
+        '''
+        DESCRIPTION
+            Detalhamento das movimentações bancarias feitas pelo usuario; 
+        '''
 class Cliente:
 
     cont = 1
@@ -42,6 +65,10 @@ class Cliente:
         self._limite = limite
         self._historico = Historico()
         Cliente.cont += 1 
+        '''
+        DESCRIPTION
+            Definição da Classe Cliente;
+        '''
 
     def saca(self, valor):
         valor2 = float(valor)
@@ -51,6 +78,14 @@ class Cliente:
             return True
         else:
             return False
+        '''
+        DESCRIPTION
+            Função de saque;
+        :param valor:
+            Variavel do tipo float;
+        :return:
+            Novo valor após o saque;
+        '''
 
     def deposita(self, valor):
         valor2 = float(valor)
@@ -62,7 +97,14 @@ class Cliente:
         else:
             print('Sem limite!')
             return False
-
+        '''
+        DESCRIPTION
+            Função de Deposito;
+        :param valor:
+            Variavel do tipo float;
+        :return:
+            Novo valor após o deposito; 
+        '''
     def transfere(self, numero, valor, lista):
         for x in lista:
             if x.numero == numero and x.numero != self.numero:     
@@ -77,6 +119,10 @@ class Cliente:
                         self.deposita(valor)
                 else:
                     return False
+        '''
+        DESCRIPTION
+            Transferencia entre contas;
+        '''
 
     @property
     def nome(self):
@@ -132,6 +178,10 @@ class Historico:
     def __init__(self):
         self.abertura = datetime.datetime.today()
         self.mov = []
+        '''
+        DESCRIPTION
+            Definição da Classe Historico    
+        '''
     
     def imprime(self):
         texto = str(self.abertura) + '\n'
@@ -139,3 +189,7 @@ class Historico:
             texto += x + '\n'
         print(texto)
         return texto
+        '''
+        DESCRIPTION
+            Imprime o Histórico
+        '''

@@ -15,4 +15,5 @@ if __name__ == '__main__':
 	app.exec_()
 	cliente_socket.close()
 	sys.exit()
-    
+
+#C:\Users\Senketsv\POO II\Git\BANCOPOO\Servidor

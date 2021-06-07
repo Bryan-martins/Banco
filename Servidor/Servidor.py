@@ -23,7 +23,7 @@ while(cont != 0):
     lista = info.split("!")
 
     if (lista[0] == "1"):
-        pessoa = Cliente(str((Cliente.cont)), lista[1], lista[2], lista[3])
+        pessoa = Cliente(lista[3], lista[1], lista[2], lista[3])
         if(cad.cadastra(pessoa)):
             p = "True"
             con.send(p.encode())
@@ -32,9 +32,10 @@ while(cont != 0):
             con.send(p.encode())   
 
     elif (lista[0] == "2"):
-        existe = cad.busca(lista[1], lista[2])
+        existe = cad.logar(lista[1], lista[2])
+        print( existe[3], existe[4], existe[0])
         if (existe != None):
-            p = "{}!{}!{}!{}".format("True", existe.cpf, existe.saldo, existe.numero)
+            p = "{}!{}!{}!{}".format("True", existe[3], existe[4], existe[0])
             con.send(p.encode())
         
         else:
@@ -42,32 +43,36 @@ while(cont != 0):
             con.send(p.encode())
 
     elif (lista[0] == "3"):
-        existe = cad.busca(lista[3], lista[2])
-        if(existe.saca(lista[1]) == True):
-            p = str(existe.saldo)
+        existe = cad.logar(lista[3], lista[2])
+        existe2 = Cliente(existe[0], existe[1], existe[2], existe[3], existe[4])
+        if(existe2.saca(lista[1]) == True):
+            p = str(existe2.saldo)
             con.send(p.encode())
             print('Saque')
         else:
             print('Erro!')
 
     elif (lista[0] == "4"):
-        existe = cad.busca(lista[3], lista[2])
-        if(existe.deposita(lista[1]) == True):
-            p = str(existe.saldo)
+        existe = cad.logar(lista[3], lista[2])
+        existe3 = Cliente(existe[0], existe[1], existe[2], existe[3], existe[4])
+        if(existe3.deposita(lista[1]) == True):
+            p = str(existe3.saldo)
             con.send(p.encode())
             print('Deposito')
         else:
             print('Erro!')
-
+        
     elif (lista[0] == "5"):
-        existe = cad.busca(lista[2], lista[1])
-        texto = existe.historico.imprime()
+        existe = cad.logar(lista[2], lista[1])
+        existe3 = Cliente(existe[0], existe[1], existe[2], existe[3], existe[4])
+        texto = existe3.historico.imprime()
         con.send(texto.encode())
-
+    
     elif (lista[0] == "6"):
-        existe = cad.busca(lista[2], lista[1])
-        if(existe.transfere(lista[3], lista[4], cad._contas) != False):
-            p = str(existe.saldo)
+        existe = cad.logar(lista[2], lista[1])
+        existe4 = Cliente(existe[0], existe[1], existe[2], existe[3], existe[4])
+        if(existe4.transfere(lista[3], lista[4]) != False):
+            p = str(existe4.saldo)
             con.send(p.encode())
             print('Tranferencia')
         else:

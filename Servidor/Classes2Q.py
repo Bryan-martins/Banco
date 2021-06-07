@@ -101,6 +101,12 @@ class Conta:
             Detalhamento das movimentações bancarias feitas pelo usuario; 
         '''
 
+    def sair(self):
+        conexao.commit()
+
+        cursor.close()
+        conexao.close()
+        
 class Cliente:
 
     cont = 1

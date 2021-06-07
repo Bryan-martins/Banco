@@ -80,6 +80,7 @@ while(cont != 0):
 
     elif (lista[0] == "0"):
         cont = int(lista[1])
+        cad.sair()
         print('Encerrando server ')
 
 serv_socket.close()

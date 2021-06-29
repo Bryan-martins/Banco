@@ -128,7 +128,6 @@ class Cliente:
         self.saldo = saldo
         self._limite = limite
         self._historico = Historico()
-        self.sinc = threading.Lock()
 
         '''
         DESCRIPTION
@@ -136,16 +135,17 @@ class Cliente:
         '''
 
     def saca(self, valor):
+        sinc = threading.Lock()
         conexao.commit()
         valor2 = float(valor)
         if valor2 <= self.saldo:
             self.saldo -= valor2
-            self.sinc.acquire()
             update = '''Update Contas set saldo = %s where id = %s'''
+            sinc.acquire()
             cursor.execute(update, (self.saldo, self.numero))
+            sinc.release()
             conexao.commit()
-            self.sinc.release()
-            self.historico.mov.append('Saque de R$ {}'.format(valor2))
+            '''self.historico.mov.append('Saque de R$ {}'.format(valor2))'''
             return True
         else:
             return False
@@ -159,26 +159,17 @@ class Cliente:
         '''
 
     def deposita(self, valor):
+        sinc = threading.Lock()
         conexao.commit()
-        '''valor2 = float(valor)
-        if self.saldo <= 10000 and valor2 <= 10000 - self.saldo :
-            self.saldo += valor2
-            self.historico.mov.append('Deposito de R$ {}'.format(valor2))
-            return True
-
-        else:
-            print('Sem limite!')
-            return False
-        '''
         valor2 = float(valor)
         if self.saldo <= 10000 and valor2 <= 10000 - self.saldo :
             self.saldo += valor2
-            self.historico.mov.append('Deposito de R$ {}'.format(valor2))
-            self.sinc.acquire()
+            '''self.historico.mov.append('Deposito de R$ {}'.format(valor2))'''
             update = '''Update Contas set saldo = %s where id = %s'''
+            sinc.acquire()
             cursor.execute(update, (self.saldo, self.numero))
+            sinc.release()
             conexao.commit()
-            self.sinc.release()
             return True
         '''
         DESCRIPTION
@@ -189,44 +180,31 @@ class Cliente:
             Novo valor após o deposito; 
         '''
     def transfere(self, numero, valor):
+        sinc = threading.Lock()
         conexao.commit()
+        sinc.acquire() 
         cursor.execute("SELECT * from Contas")
+        sinc.release()
         lista3 = cursor.fetchall()
         lista4 = list(lista3)
 
-        '''for x in lista:
-            if x.numero == numero and x.numero != self.numero:     
-                res = self.saca(valor)
-                if res:
-                    res2 = x.deposita(valor)
-                    if res2:
-                        self.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(x.numero,float(valor)))
-                        return True
-
-                    else:
-                        self.deposita(valor)
-                else:
-                    return False
-        '''
         for x in lista4:
             if x[0] == numero:
                 pessoa = x
         
         if pessoa[0] == numero and pessoa[0] != self.numero:
-            existe = Cliente(pessoa[0], pessoa[1], pessoa[2], pessoa[3], pessoa[4])
-            self.sinc.acquire()    
+            existe = Cliente(pessoa[0], pessoa[1], pessoa[2], pessoa[3], pessoa[4])   
             res = self.saca(valor)
             if res:
                 res2 = existe.deposita(valor)
                 if res2:
-                    self.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(numero, float(valor)))
+                    '''self.historico.mov.append('Tranferencia para a conta {}, no valor de R$ {} (Saque acima)'.format(numero, float(valor)))'''
                     return True
 
                 else:
                     self.deposita(valor)
             else:
                 return False
-            self.sinc.release()
         '''
         DESCRIPTION
             Transferencia entre contas;
